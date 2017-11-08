@@ -7,7 +7,7 @@ install_vimrc() {
   git submodule init
   git submodule update
 
-  ln -s "$HOME/.vimrc" .vimrc
+  ln -s  "$PWD/.vimrc" "$HOME/.vimrc"
 }
 
 install_vimrc
