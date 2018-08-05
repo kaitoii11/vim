@@ -31,7 +31,9 @@ call dein#add('rking/ag.vim')
 call dein#add('bronson/vim-trailing-whitespace')
 call dein#add('Shougo/vimfiler')
 call dein#add('scrooloose/nerdtree')
-call dein#add('mrtazz/DoxygenToolkit.vim')
+call dein#add('townk/vim-autoclose')
+call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('fatih/vim-go')
 call dein#end()
 call dein#save_state()
 
@@ -49,6 +51,7 @@ filetype indent on
 
 set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
+scriptencoding utf-8
 set fileformats=unix,dos,mac
 
 "setting
@@ -271,15 +274,21 @@ augroup texfile
   autocmd Filetype tex let &formatprg=md_to_latex
 augroup END
 
-" doxygen
-let g:DoxygenToolkit_briefTag_pre="@Synopsis  "
-let g:DoxygenToolkit_paramTag_pre="@Param "
-let g:DoxygenToolkit_returnTag="@Returns   "
-let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
-let g:DoxygenToolkit_authorName= "Kaito Ii"
-
 set noswapfile
 autocmd BufLeave,FocusLost * silent! wall
 
-set clipboard=unnamed,autoselect
+set backupskip=/tmp/*,/private/tmp/*
+
+if has('win32') || has('win64') || has('mac')
+  set clipboard=unnamed,autoselect
+else
+  set clipboard=unnamed,unnamedplus
+endif
+
+set secure
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
