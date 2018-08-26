@@ -34,6 +34,7 @@ call dein#add('scrooloose/nerdtree')
 call dein#add('townk/vim-autoclose')
 call dein#add('ctrlpvim/ctrlp.vim')
 call dein#add('fatih/vim-go')
+call dein#add('airblade/vim-gitgutter')
 call dein#end()
 call dein#save_state()
 
