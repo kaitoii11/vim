@@ -156,9 +156,15 @@ let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
 "syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=2
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=1
 let g:syntastic_mode_map = {'mode': 'passive',
                             \'active_filetypes': ['python'],
                             \'passive_filetypes':[]}
@@ -182,7 +188,7 @@ let g:NERDTreeMinimalUI=1
 let g:NERDTreeDirArrows=0
 let g:NERDTreeMouseMode=2
 
-" unite {{{
+" unite
 let g:unite_force_overwrite_statusline = 0
 let g:unite_enable_start_insert=1
 nmap <silent> <C-u><C-b> :<C-u>Unite buffer<CR>
