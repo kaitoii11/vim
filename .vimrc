@@ -86,10 +86,10 @@ set hlsearch
 set incsearch
 
 " fold
-set foldenable
-set foldnestmax=3
-nnoremap <space> za
-set foldmethod=indent
+" set foldenable
+" set foldnestmax=3
+" nnoremap <space> za
+" set foldmethod=indent
 
 "display
 syntax on
