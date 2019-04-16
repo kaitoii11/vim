@@ -12,7 +12,11 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/neocomplete.vim', { 'on_i': 1 } )
   call dein#add('Shougo/neosnippet', { 'on_i': 1 } )
-  call dein#add('scrooloose/syntastic')
+  if has('job') && has('channel') && has('timers')
+    call dein#add('w0rp/ale')
+  else
+    call dein#add('vim-syntastic/syntastic')
+  endif
   call dein#add('thinca/vim-quickrun')
   call dein#add('nathanaelkane/vim-indent-guides')
   call dein#add('terryma/vim-multiple-cursors')
@@ -289,13 +293,6 @@ endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:neocomplcache_temporary_dir="$HOME/.vim/tmp/neocomplcache"
-
-" markdown to tex
-augroup texfile
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
-  let md_to_latex  = "pandoc --from=markdown --to=latex"
-  autocmd Filetype tex let &formatprg=md_to_latex
-augroup END
 
 set noswapfile
 autocmd BufLeave,FocusLost * silent! wall
