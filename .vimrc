@@ -11,7 +11,11 @@ if dein#load_state('/home/ii/.cache/dein')
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/neocomplete.vim', { 'on_i': 1 } )
   call dein#add('Shougo/neosnippet', { 'on_i': 1 } )
-  call dein#add('scrooloose/syntastic')
+  if has('job') && has('channel') && has('timers')
+    call dein#add('w0rp/ale')
+  else
+    call dein#add('vim-syntastic/syntastic')
+  endif
   call dein#add('thinca/vim-quickrun')
   call dein#add('nathanaelkane/vim-indent-guides')
   call dein#add('terryma/vim-multiple-cursors')
