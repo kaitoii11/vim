@@ -1,13 +1,12 @@
 if !&compatible
   set nocompatible
 endif
-
 " dein settings {{{
 " セッテイング
 set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 " プラグイン読み込み&キャッシュ作成
-if dein#load_state('$HOME/.cache/dein')
-  call dein#begin(expand('$HOME/.cache/dein'))
+if dein#load_state('/home/ii/.cache/dein')
+  call dein#begin('/home/ii/.cache/dein')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/neocomplete.vim', { 'on_i': 1 } )
@@ -32,14 +31,18 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('rking/ag.vim')
   call dein#add('bronson/vim-trailing-whitespace')
   call dein#add('Shougo/vimfiler')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('townk/vim-autoclose')
   call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('fatih/vim-go')
   call dein#add('airblade/vim-gitgutter')
+  call dein#add('scrooloose/nerdtree')
   call dein#end()
   call dein#save_state()
 endif
+
+filetype on
+filetype plugin indent on
+filetype indent on
+syntax enable
 
 " 不足プラグインの自動インストール
 if has('vim_starting') && dein#check_install()
@@ -49,13 +52,9 @@ endif
 
 "End dein Scripts-------------------------
 
-filetype on
-filetype plugin indent on
-filetype indent on
 
 set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
-scriptencoding utf-8
 set fileformats=unix,dos,mac
 
 "setting
@@ -86,13 +85,12 @@ set hlsearch
 set incsearch
 
 " fold
-" set foldenable
-" set foldnestmax=3
-" nnoremap <space> za
-" set foldmethod=indent
+set foldenable
+set foldnestmax=3
+nnoremap <space> za
+set foldmethod=indent
 
 "display
-syntax on
 colorscheme koehler
 "set autoindent
 set smartindent
@@ -127,19 +125,6 @@ nmap <up> gk
 nmap <down> gj
 imap <c-j> <esc>
 
-if &term =~ "xterm"
-  let &t_SI .= "\e[?2004h"
-  let &t_EI .= "\e[?2004l"
-  let &pastetoggle = "\e[201~"
-
-  function XTermPasteBegin(ret)
-    set paste
-    return a:ret
-  endfunction
-
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-endif
-
 " vim$BN)$A>e$2$?$H$-$K!"<+F0E*$K(Bvim-indent-guides$B$r%*%s$K$9$k(B
 let g:indent_guides_enable_on_vim_startup=1
 " $B%,%$%I$r%9%?!<%H$9$k%$%s%G%s%H$NNL(B
@@ -156,15 +141,9 @@ let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
 "syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=2
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=1
 let g:syntastic_mode_map = {'mode': 'passive',
                             \'active_filetypes': ['python'],
                             \'passive_filetypes':[]}
@@ -188,7 +167,7 @@ let g:NERDTreeMinimalUI=1
 let g:NERDTreeDirArrows=0
 let g:NERDTreeMouseMode=2
 
-" unite
+" unite {{{
 let g:unite_force_overwrite_statusline = 0
 let g:unite_enable_start_insert=1
 nmap <silent> <C-u><C-b> :<C-u>Unite buffer<CR>
@@ -225,15 +204,14 @@ let g:airline_section_z = get(g:, 'airline_linecolumn_prefix', '').'%3l:%-2v'
 let g:airline#extensions#whitespace#enabled = 0
 
 "region expand
-"call expand_region#custom_text_objects({
-let g:expand_region_text_objects={
+call expand_region#custom_text_objects({
       \ "\/\\n\\n\<CR>": 1,
       \ 'a]' :1,
       \ 'ab' :1,
       \ 'aB' :1,
       \ 'ii' :0,
       \ 'ai' :0,
-      \ }
+      \ })
 let g:expand_region_use_select_mode = 1
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -290,28 +268,7 @@ let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:neocomplcache_temporary_dir="$HOME/.vim/tmp/neocomplcache"
 
-" markdown to tex
-augroup texfile
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
-  let md_to_latex  = "pandoc --from=markdown --to=latex"
-  autocmd Filetype tex let &formatprg=md_to_latex
-augroup END
-
 set noswapfile
 autocmd BufLeave,FocusLost * silent! wall
 
-set backupskip=/tmp/*,/private/tmp/*
-
-if has('win32') || has('win64') || has('mac')
-  set clipboard=unnamed,autoselect
-else
-  set clipboard=unnamed,unnamedplus
-endif
-
-set secure
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
+set clipboard=unnamed,autoselect
